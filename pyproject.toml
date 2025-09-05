@@ -9,3 +9,10 @@ dependencies = [
     "geopy>=2.4.1",
     "requests>=2.32.5",
 ]
+
+[project.scripts]
+nfway = "main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
