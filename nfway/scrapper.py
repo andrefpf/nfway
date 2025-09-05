@@ -4,6 +4,7 @@ from decimal import Decimal
 from nfway.nf_info import NFItem, NFInfo
 import re
 from datetime import date, time
+from geopy.geocoders import Nominatim
 
 
 ITEM_ID_REGEX = re.compile(r"Item \+ \d+")
@@ -22,24 +23,20 @@ def read_url(url) -> NFInfo:
 
     emiter_name_element = soup.find("div", id="u20")
     emiter_cnpj_element = emiter_name_element.find_next_sibling("div", class_="text")
-    emiter_address_element = emiter_cnpj_element.find_next_sibling(
-        "div", class_="text"
-    )
+    emiter_address_element = emiter_cnpj_element.find_next_sibling("div", class_="text")
 
     item_elements = soup.find_all("tr", id=ITEM_ID_REGEX)
 
     total_value_element = soup.find("span", class_="totalNumb txtMax")
     tax_value_element = soup.find("span", class_="totalNumb txtObs")
-    general_info_element = soup.find(
-        "li"
-    )
+    general_info_element = soup.find("li")
     access_key_element = soup.find("span", class_="chave")
 
     name = fix_spacement(emiter_name_element.text)
     address = fix_spacement(emiter_address_element.text)
-    cnpj = ""
-    global_coords = None
+    global_coords = find_global_coords(address)
 
+    cnpj = ""
     if result := CNPJ_REGEX.search(emiter_cnpj_element.text):
         cnpj = result.group(0)
 
@@ -71,15 +68,15 @@ def read_url(url) -> NFInfo:
         items=tuple(items),
         total_value=total_value,
         total_taxes=total_taxes,
-        # 
+        #
         emission_date=emission_date,
         emission_time=emission_time,
-        # 
+        #
         emiter_name=name,
         emiter_cnpj=cnpj,
         emiter_address=address,
         emiter_coords=global_coords,
-        # 
+        #
         number=nf_number,
         series=nf_series,
         access_key=access_key,
@@ -118,3 +115,28 @@ def fix_spacement(text: str) -> str:
 
 def as_money(text: str) -> Decimal:
     return Decimal(text.replace(",", "."))
+
+
+def find_global_coords(address: str) -> tuple[float, float] | None:
+    text_regex = re.compile(r"[\s\w]+")
+    number_regex = re.compile(r"\d+")
+    cep_regex = re.compile(r"\d{5}-\d{3}")
+
+    filtered_address_parts = list()
+    for part in address.split(","):
+        part = part.strip()
+        if any(
+            [
+                text_regex.fullmatch(part),
+                number_regex.fullmatch(part),
+                cep_regex.fullmatch(part),
+            ]
+        ):
+            filtered_address_parts.append(part)
+
+    address = ", ".join(filtered_address_parts)
+    geolocator = Nominatim(user_agent="nfway_app")
+    location = geolocator.geocode(address)
+    if location:
+        return (location.latitude, location.longitude)
+    return None
