@@ -95,13 +95,9 @@ def parse_item(item_element: BeautifulSoup) -> NFItem:
     if result := CODE_REGEX.search(code_element.text):
         code = result.group(0)
 
-    quantity = float(quantity_element.contents[1])
-    if quantity.is_integer():
-        quantity = int(quantity)
-
     return NFItem(
         name=fix_spacement(name_element.text),
-        quantity=int(quantity_element.contents[1].get_text(strip=True)),
+        quantity=as_quantity(quantity_element.contents[1]),
         quantity_unit=quantity_unit_element.contents[1].strip(),
         unit_value=as_money(unit_value_element.contents[1]),
         item_value=as_money(item_value_element.text.strip()),
@@ -115,6 +111,13 @@ def fix_spacement(text: str) -> str:
 
 def as_money(text: str) -> Decimal:
     return Decimal(text.replace(",", "."))
+
+
+def as_quantity(text: str) -> float | int:
+    quantity = float(text.replace(",", "."))
+    if quantity.is_integer():
+        return int(quantity)
+    return quantity
 
 
 def find_global_coords(address: str) -> tuple[float, float] | None:
