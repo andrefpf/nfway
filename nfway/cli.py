@@ -26,7 +26,7 @@ def cli_parser() -> ArgumentParser:
         "-o",
         "--output",
         type=Path,
-        help="Output file to save the NF-e data",
+        help="Output CSV file to save the NF-e data",
         default=None,
     )
 
