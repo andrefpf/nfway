@@ -1,6 +1,7 @@
 from nfway.scrapper import read_url
 from nfway.cli import cli_parser
 from nfway.csv_writer import write_to_csv
+from nfway.qrcode_reader import read_qrcode
 
 from pprint import pprint
 
@@ -13,12 +14,22 @@ def main():
     if args.url is not None:
         try:
             result_value = read_url(args.url)
-        except Exception as e:
-            print(f"Ocorreu um erro durante a leitura da NF")
+        except Exception:
+            print("Ocorreu um erro durante a leitura da NF")
             exit(1)
 
     elif args.qr_code is not None:
-        raise NotImplementedError("QR code reading not implemented yet.")
+        try:
+            url = read_qrcode(args.qr_code)
+        except Exception:
+            print("Ocorreu um erro durante a leitura do QR code")
+            exit(1)
+
+        try:
+            result_value = read_url(url)
+        except Exception:
+            print("Ocorreu um erro durante a leitura da NF")
+            exit(1)
 
     else:
         print("Nenhum argumento fornecido.")

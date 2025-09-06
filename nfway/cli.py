@@ -15,7 +15,7 @@ def cli_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
-        "-q",
+        "-qr",
         "--qr-code",
         type=Path,
         help="Path to read the QR code image containing the NF-e URL",
