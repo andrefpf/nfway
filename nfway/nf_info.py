@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from decimal import Decimal
 from datetime import date, time
+from decimal import Decimal
 
 
 @dataclass(frozen=True)
@@ -30,4 +30,3 @@ class NFInfo:
     number: str = ""
     series: str = ""
     access_key: str = ""
-

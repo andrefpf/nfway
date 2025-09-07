@@ -1,11 +1,12 @@
-import requests
-from bs4 import BeautifulSoup
-from decimal import Decimal
-from nfway.nf_info import NFItem, NFInfo
 import re
 from datetime import date, time
+from decimal import Decimal
+
+import requests
+from bs4 import BeautifulSoup
 from geopy.geocoders import Nominatim
 
+from nfway.nf_info import NFInfo, NFItem
 
 ITEM_ID_REGEX = re.compile(r"Item \+ \d+")
 CODE_REGEX = re.compile(r"\d+")

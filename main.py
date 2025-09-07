@@ -1,9 +1,9 @@
-from nfway.scrapper import read_url
+from pprint import pprint
+
 from nfway.cli import cli_parser
 from nfway.csv_writer import write_to_csv
 from nfway.qrcode_reader import read_qrcode
-
-from pprint import pprint
+from nfway.scrapper import read_url
 
 
 def main():

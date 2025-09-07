@@ -1,6 +1,7 @@
-from nfway.nf_info import NFInfo
-from pathlib import Path
 import csv
+from pathlib import Path
+
+from nfway.nf_info import NFInfo
 
 
 def write_to_csv(nf_info: NFInfo, file_path: Path):

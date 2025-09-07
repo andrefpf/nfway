@@ -1,4 +1,5 @@
 import logging
+from tempfile import TemporaryFile
 from traceback import print_exception
 
 from telegram import Update
@@ -10,12 +11,10 @@ from telegram.ext import (
     filters,
 )
 
-from tempfile import TemporaryFile
-
-from nfway.nf_info import NFInfo
-from nfway.scrapper import read_url
-from nfway.qrcode_reader import read_qrcode
 from nfway import message_templates
+from nfway.nf_info import NFInfo
+from nfway.qrcode_reader import read_qrcode
+from nfway.scrapper import read_url
 
 # Enable logging
 fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

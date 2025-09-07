@@ -25,4 +25,5 @@ build-backend = "hatchling.build"
 dev = [
     "matplotlib>=3.10.6",
     "pyside6>=6.9.2",
+    "ruff>=0.12.12",
 ]

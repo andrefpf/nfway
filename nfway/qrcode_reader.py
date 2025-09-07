@@ -1,7 +1,6 @@
-import cv2
 from pathlib import Path
 
-import matplotlib.pyplot as plt
+import cv2
 
 
 def read_qrcode(image_path: Path) -> str | None:
