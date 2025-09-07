@@ -15,12 +15,9 @@ from tempfile import TemporaryFile
 from nfway.scrapper import read_url
 from nfway.qrcode_reader import read_qrcode
 
-
 # Enable logging
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO,
-)
+fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+logging.basicConfig(format=fmt, level=logging.INFO)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
