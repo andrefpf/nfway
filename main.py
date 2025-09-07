@@ -30,6 +30,10 @@ def main():
             print("Ocorreu um erro durante a leitura do QR code")
             return
 
+        if url is None:
+            print("Ocorreu um erro durante a leitura do QR code")
+            return
+
         try:
             result_value = read_url(url)
         except Exception:
