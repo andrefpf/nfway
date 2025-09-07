@@ -8,8 +8,8 @@ EMITTER_HEADER_TEMPLATE = """
 ITEM_TEMPLATE = """
 <b>Item:</b> {name}
 <b>Quantidade:</b> {quantity} {quantity_unit}
-<b>Valor unitário:</b> {unit_value}
-<b>Valor do item:</b> {item_value}
+<b>Valor unitário:</b> R$ {unit_value}
+<b>Valor do item:</b> R$ {item_value}
 """
 
 NF_INFO_TEMPLATE = """
@@ -21,8 +21,8 @@ NF_INFO_TEMPLATE = """
 """
 
 TOTAL_TEMPLATE = """
-<b>Valor Total:</b> {total_value}
-<i>Total em Impostos:</i> {total_taxes}
+<b>Valor Total:</b> R$ {total_value}
+<i>Total em Impostos: R$ {total_taxes}</i>
 """
 
 BAD_URL_TEMPLATE = """
