@@ -13,6 +13,9 @@ CODE_REGEX = re.compile(r"\d+")
 CNPJ_REGEX = re.compile(r"\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}")
 DATE_REGEX = re.compile(r"\d{2}/\d{2}/\d{4}")
 TIME_REGEX = re.compile(r"\d{2}:\d{2}:\d{2}")
+TEXT_SPACES_REGEX = re.compile(r"([^\W\d]|[\s])+")
+NUMBER_REGEX = re.compile(r"\d+")
+CEP_REGEX = re.compile(r"\d{5}-\d{3}")
 
 
 def read_url(url) -> NFInfo:
@@ -122,18 +125,14 @@ def as_quantity(text: str) -> float | int:
 
 
 def find_global_coords(address: str) -> tuple[float, float] | None:
-    text_regex = re.compile(r"[\s\w]+")
-    number_regex = re.compile(r"\d+")
-    cep_regex = re.compile(r"\d{5}-\d{3}")
-
     filtered_address_parts = list()
     for part in address.split(","):
         part = part.strip()
         if any(
             [
-                text_regex.fullmatch(part),
-                number_regex.fullmatch(part),
-                cep_regex.fullmatch(part),
+                TEXT_SPACES_REGEX.fullmatch(part),
+                NUMBER_REGEX.fullmatch(part),
+                CEP_REGEX.fullmatch(part),
             ]
         ):
             filtered_address_parts.append(part)
