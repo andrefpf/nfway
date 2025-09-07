@@ -18,6 +18,7 @@ def cli_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
+        "-qr",
         "--qr-code",
         metavar="<path>",
         type=Path,
@@ -26,6 +27,7 @@ def cli_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
+        "-o",
         "--output",
         type=Path,
         metavar="<path>",
@@ -34,6 +36,7 @@ def cli_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
+        "-bot",
         "--telegram-bot",
         metavar="<token>",
         type=str,
