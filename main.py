@@ -10,26 +10,31 @@ def main():
     parser = cli_parser()
     args = parser.parse_args()
 
+    if args.telegram_bot is not None:
+        from nfway.telegram_bot import initialize
+
+        return initialize(args.telegram_bot)
+
     result_value = None
     if args.url is not None:
         try:
             result_value = read_url(args.url)
         except Exception:
             print("Ocorreu um erro durante a leitura da NF")
-            exit(1)
+            return
 
     elif args.qr_code is not None:
         try:
             url = read_qrcode(args.qr_code)
         except Exception:
             print("Ocorreu um erro durante a leitura do QR code")
-            exit(1)
+            return
 
         try:
             result_value = read_url(url)
         except Exception:
             print("Ocorreu um erro durante a leitura da NF")
-            exit(1)
+            return
 
     else:
         print("Nenhum argumento fornecido.")
