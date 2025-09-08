@@ -1,5 +1,5 @@
 import logging
-from tempfile import TemporaryFile
+from tempfile import NamedTemporaryFile
 from traceback import print_exception
 
 from telegram import Update
@@ -93,7 +93,7 @@ async def handle_qr_code(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     user = update.message.from_user
     logger.info(f"User {user.first_name} sent an image")
 
-    download_path = TemporaryFile().name
+    download_path = NamedTemporaryFile().name
     photo_file = await update.message.photo[-1].get_file()
     await photo_file.download_to_drive(download_path)
 
